@@ -4,6 +4,13 @@ sc = Screen()
 count = 0
 z = count
 
+class Enemy:
+    def __init__(self, x, y):
+        print 'creating enemy'
+
+e1 = Enemy(200, 200)
+
+    
 
 sc.title('you')
 pen = Turtle()
@@ -20,11 +27,11 @@ shoty.left(90)
 shoty.speed(2)
 def showcontent():
     pen.write('welcome', font=('Arial', 50, 'normal'))
-    time.sleep(3) # show welcome for 3 seconds
+    time.sleep(0.3) # show welcome for 3 seconds
     for i in range (10,0,-1):
         pen.clear()
         pen.write(str(i), font=('Arial', 40, 'normal'))
-        time.sleep(1) # wait 1 second before showing the next number in the countdown
+        time.sleep(0.1) # wait 1 second before showing the next number in the countdown
         pen.clear()
     shoty.st()
 SB = Turtle()
