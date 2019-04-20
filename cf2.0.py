@@ -1,15 +1,50 @@
 from turtle import *
+import circle_collision
 import time
 sc = Screen()
 count = 0
 z = count
 
+shoty = Turtle()
+
+display = Turtle()
+display.penup()
+display.setpos(-330, 330)
+display.write('no message')
+
 class Enemy:
     def __init__(self, x, y):
-        print 'creating enemy'
+        self.x = x
+        self.y = y
+        self.radius = 50
+        self.init_turtle()
+    def init_turtle(self):
+        self.turtle = Turtle()
+        self.turtle.resizemode('user')
+        self.turtle.penup()
+        self.turtle.shape('circle')
+        self.turtle.shapesize(self.radius * 0.1, self.radius * 0.1, 1)
+        self.turtle.color('red')
+        self.turtle.setpos(self.x, self.y)
+    def is_touching_player(self):
+        playerPos = shoty.pos()
+        return circle_collision.circles_collide(
+            self.x,
+            self.y,
+            self.radius,
+            playerPos[0],
+            playerPos[1],
+            8
+        )
+e1 = Enemy(50.0, 100.0)
 
-e1 = Enemy(200, 200)
-
+def on_move():
+    msg = 'nothing to report'
+    if e1.is_touching_player():
+        msg = 'Player touches enemy'
+    display.clear()
+    display.write(msg, font=('Arial', 18, 'normal'))
+    
     
 
 sc.title('you')
@@ -17,7 +52,7 @@ pen = Turtle()
 pen.ht()
 pen.penup()
 pen.backward(50)
-shoty = Turtle()
+
 shoty.ht()
 shoty.penup()
 shoty.setpos (0,-300)
@@ -34,6 +69,8 @@ def showcontent():
         time.sleep(0.1) # wait 1 second before showing the next number in the countdown
         pen.clear()
     shoty.st()
+    display.clear()
+    display.write('nothing to report', font=('Arial', 18, 'normal'))
 SB = Turtle()
 SB.penup()
 SB.shape('circle')
@@ -46,14 +83,18 @@ def start(x,y):
     
 def mr():
     shoty.right(10)
+    on_move()
 
 def ml():
     shoty.left(10)
+    on_move()
 
 def forward():
     shoty.forward(15)
+    on_move()
 def backward():
     shoty.backward(15)
+    on_move()
     
 SB.onclick(start)
 bulletList = []
